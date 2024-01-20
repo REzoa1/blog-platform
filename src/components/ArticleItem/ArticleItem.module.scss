@@ -1,0 +1,116 @@
+@import './../../scss/variables.scss';
+
+.card {
+  width: 940px;
+  align-self: stretch;
+
+  border-radius: 0;
+
+  & > div {
+    padding: 15px 20px !important;
+  }
+
+  @media (max-width: 940px) {
+    width: auto;
+  }
+}
+
+.article {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media (max-width: 940px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.left {
+  overflow-wrap: anywhere;
+}
+
+.body {
+  overflow-wrap: anywhere;
+  img {
+    width: 100%;
+  }
+  pre {
+    white-space: pre-wrap;
+  }
+}
+
+.right {
+  min-width: 180px;
+
+  justify-content: end;
+  margin-left: auto;
+  text-align: end;
+
+  @media (max-width: 940px) {
+    margin: 0;
+    margin-bottom: 12px;
+    min-width: auto;
+    text-align: start;
+
+    flex-direction: row-reverse;
+    justify-content: start;
+
+    img {
+      margin-right: 12px;
+    }
+  }
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.title {
+  color: #1677ff;
+  width: auto;
+  max-width: 650px;
+  font-weight: normal;
+  font-size: 24px;
+  margin: 0 !important;
+
+  &:hover {
+    color: #69b1ff;
+  }
+
+  &:active {
+    color: #0958d9;
+  }
+
+  @media (max-width: 780px) {
+    width: 500px;
+    max-width: 940px;
+  }
+
+  @media (max-width: 600px) {
+    width: 400px;
+    max-width: 940px;
+  }
+
+  @media (max-width: 540px) {
+    width: 200px;
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: normal;
+  color: $heading-color;
+}
+
+.secondary {
+  color: $text-color-secondary;
+}

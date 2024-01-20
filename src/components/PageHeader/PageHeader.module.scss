@@ -1,0 +1,41 @@
+@import './../../scss/variables.scss';
+
+.header {
+  position: fixed;
+  width: 100%;
+
+  z-index: 1;
+  top: 0;
+
+  display: flex;
+  justify-content: space-between;
+  background-color: $background-color-base;
+
+  @media (max-width: 940px) {
+    padding: 0 20px;
+  }
+}
+
+.link {
+  user-select: none;
+
+  font-family: 'DM Sans';
+  font-size: 15px;
+  color: $heading-color;
+
+  &:hover {
+    color: #000000;
+  }
+}
+
+.btn {
+  border-color: $success-color;
+  color: $success-color;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: $success-color;
+    border-color: $success-color !important;
+    color: $background-color-base !important;
+  }
+}

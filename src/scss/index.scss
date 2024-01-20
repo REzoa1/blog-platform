@@ -1,0 +1,35 @@
+@import './defaults.scss';
+@import './variables.scss';
+
+.ant-pagination-item-link-icon {
+  color: #000000b4 !important;
+}
+
+#root {
+  height: calc(100vh - 64px);
+}
+
+.container {
+  background-color: $background-color;
+  height: 100%;
+
+  margin-top: 64px;
+  padding: 26px 0;
+  overflow-y: auto;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+
+.wrapper {
+  margin: 0 auto 26px;
+
+  @media (max-width: 940px) {
+    margin: 0 20px 20px;
+  }
+}
