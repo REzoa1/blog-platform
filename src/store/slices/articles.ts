@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { API_BASE } from '../../utils/constatnts'
 import { ArticleType, StatusType } from '../../types'
+import { getData } from '../../utils/fetch-helpers'
 
 type StateType = {
   articles: ArticlesState
@@ -26,36 +27,14 @@ const initialState: ArticlesState = {
 }
 
 export const getArticles = createAsyncThunk('articles/getArticles', async (page: number, { rejectWithValue }) => {
-  try {
-    const offset = page === 1 ? 0 : (page - 1) * 5
-    const url = `${API_BASE}/articles/?limit=5&offset=${offset}`
-    const res = await fetch(url)
-
-    if (res.ok) {
-      const data = await res.json()
-      return data
-    }
-
-    return rejectWithValue({ error: 'Failed to fetch data', code: res.status })
-  } catch (err) {
-    return rejectWithValue('Failed to fetch data (The API host is invalid)')
-  }
+  const offset = page === 1 ? 0 : (page - 1) * 5
+  const url = `${API_BASE}/articles/?limit=5&offset=${offset}`
+  return getData(url, null, rejectWithValue)
 })
 
 export const getArticle = createAsyncThunk('articles/getArticle', async (slug: string, { rejectWithValue }) => {
-  try {
-    const url = `${API_BASE}/articles/${slug}`
-    const res = await fetch(url)
-
-    if (res.ok) {
-      const data = await res.json()
-      return data
-    }
-
-    return rejectWithValue({ error: 'Failed to fetch data', code: res.status })
-  } catch (err) {
-    return rejectWithValue('Failed to fetch data (The API host is invalid)')
-  }
+  const url = `${API_BASE}/articles/${slug}`
+  return getData(url, null, rejectWithValue)
 })
 
 export const articlesSlice = createSlice({
@@ -74,10 +53,9 @@ export const articlesSlice = createSlice({
       state.status = 'success'
 
       const { articles, articlesCount } = action.payload
-      if (articles) {
-        state.articles = articles
-        state.total = articlesCount
-      }
+
+      state.articles = articles
+      state.total = articlesCount
     })
     builder.addCase(getArticles.rejected, (state, action) => {
       const { code } = action.payload as { code: number }
@@ -91,10 +69,7 @@ export const articlesSlice = createSlice({
     builder.addCase(getArticle.fulfilled, (state, action) => {
       state.status = 'success'
 
-      const { article } = action.payload
-      if (article) {
-        state.article = article
-      }
+      state.article = action.payload.article
     })
     builder.addCase(getArticle.rejected, (state, action) => {
       const { code } = action.payload as { code: number }

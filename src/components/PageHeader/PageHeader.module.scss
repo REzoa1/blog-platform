@@ -11,7 +11,7 @@
   justify-content: space-between;
   background-color: $background-color-base;
 
-  @media (max-width: 940px) {
+  @media (max-width: $screen-md) {
     padding: 0 20px;
   }
 }
@@ -37,5 +37,27 @@
     background-color: $success-color;
     border-color: $success-color !important;
     color: $background-color-base !important;
+  }
+}
+
+.username {
+  color: $heading-color;
+  font-size: 18px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    opacity: 0.8;
   }
 }

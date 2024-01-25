@@ -85,6 +85,8 @@ const ARTICLES_DEFAULT = [
   },
 ]
 
+const DEFAULT_IMAGE = 'https://static.productionready.io/images/smiley-cyrus.jpg'
+
 const THEME_TOKENS = {
   token: {
     fontFamily:
@@ -97,7 +99,10 @@ const THEME_TOKENS = {
       colorPrimaryHover: '#fff',
       itemSize: 22,
     },
+    Form: {
+      itemMarginBottom: 12,
+    },
   },
 }
 
-export { ARTICLES_DEFAULT, API_BASE, THEME_TOKENS }
+export { API_BASE, ARTICLES_DEFAULT, DEFAULT_IMAGE, THEME_TOKENS }

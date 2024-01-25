@@ -4,20 +4,20 @@ import { Spin } from 'antd'
 import { useAppSelector } from '../../store'
 import { selectArticles } from '../../store/slices/articles'
 import { StatusType } from '../../types'
-import ErrorWrapper from '../ErrorWrapper/ErrorWrapper'
+import Error from '../Error/Error'
 
 type MapType = { [Status in StatusType]: JSX.Element }
 
 type PropsType = {
-  component: JSX.Element
+  children: JSX.Element
 }
 
-function ArticleWrapper({ component }: PropsType) {
+function ArticleWrapper({ children }: PropsType) {
   const { status, errCode } = useAppSelector(selectArticles)
 
   const loading = <Spin className="margin-auto" />
-  const failed = <ErrorWrapper code={errCode} />
-  const success = component
+  const failed = <Error code={errCode} />
+  const success = children
 
   const mapComponents = { idle: loading, loading, failed, success } as MapType
 

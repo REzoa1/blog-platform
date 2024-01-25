@@ -9,7 +9,7 @@ type PropsType = {
   code: number | null
 }
 
-function ErrorWrapper({ code }: PropsType) {
+function Error({ code }: PropsType) {
   const history = useHistory()
   const availableCodes = [403, 404, 500]
 
@@ -39,4 +39,4 @@ function ErrorWrapper({ code }: PropsType) {
   )
 }
 
-export default ErrorWrapper
+export default Error

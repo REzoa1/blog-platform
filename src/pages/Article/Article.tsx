@@ -16,7 +16,7 @@ function Article() {
     <Empty />
   )
 
-  return <ArticleWrapper component={component} />
+  return <ArticleWrapper>{component}</ArticleWrapper>
 }
 
 export default Article

@@ -36,7 +36,7 @@ function Articles() {
   )
 
   const component = articles.length ? articlesData : <Empty />
-  return <ArticleWrapper component={component} />
+  return <ArticleWrapper>{component}</ArticleWrapper>
 }
 
 export default Articles

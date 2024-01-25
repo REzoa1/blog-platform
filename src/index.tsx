@@ -1,11 +1,11 @@
 import React from 'react'
-import { ConfigProvider } from 'antd'
 import ReactDOM from 'react-dom/client'
+import { ConfigProvider } from 'antd'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
+import App from './components/App/App'
 import { store } from './store'
-import App from './App'
 import { THEME_TOKENS } from './utils/constatnts'
 import './scss/index.scss'
 

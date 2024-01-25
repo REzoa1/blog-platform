@@ -10,7 +10,7 @@
     padding: 15px 20px !important;
   }
 
-  @media (max-width: 940px) {
+  @media (max-width: $screen-md) {
     width: auto;
   }
 }
@@ -20,7 +20,7 @@
   flex-direction: row;
   justify-content: space-between;
 
-  @media (max-width: 940px) {
+  @media (max-width: $screen-md) {
     flex-direction: column-reverse;
   }
 }
@@ -46,7 +46,7 @@
   margin-left: auto;
   text-align: end;
 
-  @media (max-width: 940px) {
+  @media (max-width: $screen-md) {
     margin: 0;
     margin-bottom: 12px;
     min-width: auto;
@@ -82,20 +82,6 @@
 
   &:active {
     color: #0958d9;
-  }
-
-  @media (max-width: 780px) {
-    width: 500px;
-    max-width: 940px;
-  }
-
-  @media (max-width: 600px) {
-    width: 400px;
-    max-width: 940px;
-  }
-
-  @media (max-width: 540px) {
-    width: 200px;
   }
 }
 

@@ -6,7 +6,7 @@ import { format } from 'date-fns'
 import Markdown from 'markdown-to-jsx'
 
 import { ArticleType } from '../../types'
-import { cn } from '../../utils/helpers'
+import { cn, onImageError } from '../../utils/helpers'
 
 import s from './ArticleItem.module.scss'
 
@@ -20,11 +20,15 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
 
   const date = format(createdAt, 'MMMM dd, yyyy')
   const trimmedTagList = tagList && tagList?.map((tag: string) => tag?.trim()).filter(Boolean)
+  const isManyTags = trimmedTagList.length > 10 && !isArticlePage
+  const finalTagList = isManyTags ? trimmedTagList.slice(0, 10) : trimmedTagList
 
   const isEmptyTitle = title?.trim().length === 0
-  const titleClassName = cn(s.title, !isArticlePage && s.ellipsis, isEmptyTitle && s.secondary)
 
   const croppedDesc = description?.length > 300 ? `${description?.slice(0, 300)}...` : description
+
+  const titleClassName = cn(s.title, !isArticlePage && s.ellipsis, isEmptyTitle && s.secondary)
+  const descClassName = cn(isArticlePage && s.secondary)
 
   const article = (
     <Flex className={s.article}>
@@ -39,9 +43,9 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
           </Button>
         </Flex>
 
-        {trimmedTagList.length !== 0 && (
+        {finalTagList.length !== 0 && (
           <Space size={[0, 'small']} wrap>
-            {tagList.map((tag: string, i: number) => {
+            {finalTagList.map((tag: string, i: number) => {
               const key = `${tag}${i}`
               const finalTag = tag.slice().trim().length > 30 ? `${tag.slice(0, 30)}...` : tag
 
@@ -53,10 +57,11 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
                 )
               )
             })}
+            {isManyTags && '...'}
           </Space>
         )}
 
-        {description?.length !== 0 && <div className={cn(isArticlePage && s.secondary)}>{croppedDesc}</div>}
+        {description?.length !== 0 && <div className={descClassName}>{croppedDesc}</div>}
       </Flex>
       <Flex className={s.right} align="start" gap="middle">
         <div>
@@ -64,7 +69,7 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
           <span className={s.secondary}>{date}</span>
         </div>
 
-        <img className={s.avatar} alt="avatar" src={author.image} />
+        <img className={s.avatar} alt="avatar" src={author.image} onError={onImageError} />
       </Flex>
     </Flex>
   )
@@ -72,11 +77,7 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
   return (
     <Card bordered={false} className={s.card}>
       {article}
-      {isArticlePage && body && (
-        <Markdown className={s.body} options={{ wrapper: 'article', forceWrapper: true }}>
-          {body}
-        </Markdown>
-      )}
+      {isArticlePage && body && <Markdown className={s.body}>{body}</Markdown>}
     </Card>
   )
 }
