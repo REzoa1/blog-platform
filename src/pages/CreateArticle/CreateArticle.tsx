@@ -3,10 +3,10 @@ import { Form } from 'antd'
 
 import DynamicForm from '../../components/DynamicForm/DynamicForm'
 
-function SignIn() {
+function CreateArticle() {
   const [form] = Form.useForm()
 
-  return <DynamicForm name="login" form={form} />
+  return <DynamicForm name="create-article" form={form} />
 }
 
-export default SignIn
+export default CreateArticle

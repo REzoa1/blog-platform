@@ -19,12 +19,11 @@ const useArticles = () => {
 const useArticle = () => {
   const dispatch = useAppDispatch()
   const { slug } = useParams<{ slug: string }>()
+  const { article } = useAppSelector(selectArticles)
 
   useEffect(() => {
     dispatch(getArticle(slug))
   }, [dispatch, slug])
-
-  const { article } = useAppSelector(selectArticles)
 
   return article
 }

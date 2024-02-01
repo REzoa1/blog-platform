@@ -1,0 +1,16 @@
+@import './../../../scss/variables.scss';
+
+.btn {
+  width: 80px;
+}
+
+.successBtn {
+  border-color: $success-color;
+  color: $success-color;
+
+  &:hover {
+    border-color: $success-color !important;
+    color: $success-color !important;
+    opacity: 0.6;
+  }
+}

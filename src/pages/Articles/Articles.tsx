@@ -6,6 +6,9 @@ import { setPage } from '../../store/slices/articles'
 import { useArticles } from '../../hooks'
 import ArticleWrapper from '../../components/ArticleWrapper/ArticleWrapper'
 import ArticleItem from '../../components/ArticleItem/ArticleItem'
+import { PAGE_SIZE } from '../../utils/constatnts'
+
+import s from './Articles.module.scss'
 
 function Articles() {
   const dispatch = useAppDispatch()
@@ -17,7 +20,7 @@ function Articles() {
 
   const articlesData = (
     <>
-      <Flex className="wrapper" vertical gap={26}>
+      <Flex vertical gap={26}>
         {articles.map((data) => {
           return <ArticleItem key={data.slug} data={data} />
         })}
@@ -25,10 +28,10 @@ function Articles() {
 
       <Pagination
         showQuickJumper
-        className="mx-auto"
+        className={s.pagination}
         onChange={handleChange}
         showSizeChanger={false}
-        pageSize={5}
+        pageSize={PAGE_SIZE}
         current={page}
         total={total}
       />
@@ -36,6 +39,7 @@ function Articles() {
   )
 
   const component = articles.length ? articlesData : <Empty />
+
   return <ArticleWrapper>{component}</ArticleWrapper>
 }
 

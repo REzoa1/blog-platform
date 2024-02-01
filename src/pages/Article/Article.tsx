@@ -8,13 +8,7 @@ import { useArticle } from '../../hooks'
 function Article() {
   const article = useArticle()
 
-  const component = article ? (
-    <div className="wrapper">
-      <ArticleItem data={article} isArticlePage />
-    </div>
-  ) : (
-    <Empty />
-  )
+  const component = article ? <ArticleItem data={article} isArticlePage /> : <Empty />
 
   return <ArticleWrapper>{component}</ArticleWrapper>
 }

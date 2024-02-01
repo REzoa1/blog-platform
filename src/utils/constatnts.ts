@@ -1,89 +1,9 @@
+import { FormInstance } from 'antd'
+import { Rule } from 'antd/es/form'
+
 const API_BASE = 'https://blog.kata.academy/api'
 
-const ARTICLES_DEFAULT = [
-  {
-    slug: 'test123-vohw8w',
-    title: 'test123',
-    description: 'test312',
-    body: '123456789test',
-    createdAt: '2023-12-14T09:28:37.577Z',
-    updatedAt: '2023-12-14T09:28:37.577Z',
-    tagList: ['test', 'test'],
-    favorited: false,
-    favoritesCount: 0,
-    author: {
-      username: 'radzhabov',
-      image: 'https://i.pinimg.com/originals/3d/c9/dc/3dc9dc07fbbcf1eed6e48d7e236f3709.webp',
-      following: false,
-    },
-  },
-  {
-    slug: 'some-article-title-trobt6',
-    title: 'Some article title',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    createdAt: '2023-12-14T09:28:21.873Z',
-    updatedAt: '2023-12-14T09:28:21.873Z',
-    tagList: ['Tag1'],
-    favorited: false,
-    favoritesCount: 0,
-    author: {
-      username: 'oneuser13',
-      image: 'https://static.productionready.io/images/smiley-cyrus.jpg',
-      following: false,
-    },
-  },
-  {
-    slug: 'some-article-title-o6wrto',
-    title: 'Some article title',
-    description:
-      'onPressEnter={(e) => {\n    e.preventDefault();  // Предотвращаем всплытие события\n    handleTagAdd();\n  }}',
-    body: 'onPressEnter={(e) => {\n    e.preventDefault();  // Предотвращаем всплытие события\n    handleTagAdd();\n  }}',
-    createdAt: '2023-12-14T09:27:50.496Z',
-    updatedAt: '2023-12-30T20:34:22.751Z',
-    tagList: ['Tag1'],
-    favorited: false,
-    favoritesCount: 1,
-    author: {
-      username: 'oneuser13',
-      image: 'https://static.productionready.io/images/smiley-cyrus.jpg',
-      following: false,
-    },
-  },
-  {
-    slug: 'some-article-title-bdforq',
-    title: 'Some article title',
-    description: 'onFinish={(values) => {\n    handleSubmit(values);\n  }}',
-    body: 'onFinish={(values) => {\n    handleSubmit(values);\n  }}',
-    createdAt: '2023-12-14T09:20:59.881Z',
-    updatedAt: '2023-12-14T09:20:59.881Z',
-    tagList: ['Tag1'],
-    favorited: false,
-    favoritesCount: 0,
-    author: {
-      username: 'oneuser13',
-      image: 'https://static.productionready.io/images/smiley-cyrus.jpg',
-      following: false,
-    },
-  },
-  {
-    slug: 'some-article-title-ykwgxr',
-    title: 'Some article title',
-    description: '(values) => {\n    handleSubmit(values);\n  }',
-    body: '(values) => {\n    handleSubmit(values);\n  }',
-    createdAt: '2023-12-14T09:20:31.987Z',
-    updatedAt: '2023-12-14T09:20:31.987Z',
-    tagList: ['Tag1'],
-    favorited: false,
-    favoritesCount: 0,
-    author: {
-      username: 'oneuser13',
-      image: 'https://static.productionready.io/images/smiley-cyrus.jpg',
-      following: false,
-    },
-  },
-]
+const PAGE_SIZE = 5
 
 const DEFAULT_IMAGE = 'https://static.productionready.io/images/smiley-cyrus.jpg'
 
@@ -105,4 +25,60 @@ const THEME_TOKENS = {
   },
 }
 
-export { API_BASE, ARTICLES_DEFAULT, DEFAULT_IMAGE, THEME_TOKENS }
+/* ============================== FIELDS ============================== */
+
+const remember = { itemName: 'remember', required: false }
+const newPassword = { itemName: 'new-password', required: false }
+const image = { itemName: 'image', required: false }
+
+const LOGIN_FIELDS = ['email', 'password']
+const REGISTER_FIELDS = ['username', 'email', 'password', 'repeat-password', 'divider', remember]
+const EDIT_PROFILE_FIELDS = ['username', 'email', newPassword, image]
+const ARTICLE_FIELDS = ['title', 'description', 'text', 'tags']
+
+/* ============================== RULES ============================== */
+
+const USERNAME_RULES = [
+  { min: 3, message: 'The username needs to be at least 3 characters!' },
+  { max: 20, message: 'The username can’t be more than 20 characters!' },
+]
+const PASSWORD_RULES = [
+  { min: 6, message: 'Your password needs to be at least 6 characters!' },
+  { max: 40, message: 'Your password can’t be more than 40 characters!' },
+]
+const EMAIL_RULES = [{ type: 'email', message: 'Please enter a valid email address!' }]
+const REPEAT_PASSWORD_RULES = [
+  ...PASSWORD_RULES,
+  ({ getFieldValue }: FormInstance) => ({
+    validator(_: Rule, value: string) {
+      if (!value || getFieldValue('password') === value) {
+        return Promise.resolve()
+      }
+      return Promise.reject(new Error('Passwords must match!'))
+    },
+  }),
+]
+const IMAGE_RULES = [{ type: 'url', message: 'Avatar image is not a valid url' }]
+const REMEMBER_RULES = [
+  {
+    validator: (_: Rule, value: boolean | undefined) =>
+      value ? Promise.resolve() : Promise.reject(new Error('Please confirm!')),
+  },
+]
+
+export {
+  API_BASE,
+  PAGE_SIZE,
+  DEFAULT_IMAGE,
+  THEME_TOKENS,
+  LOGIN_FIELDS,
+  REGISTER_FIELDS,
+  EDIT_PROFILE_FIELDS,
+  ARTICLE_FIELDS,
+  USERNAME_RULES,
+  PASSWORD_RULES,
+  EMAIL_RULES,
+  REPEAT_PASSWORD_RULES,
+  IMAGE_RULES,
+  REMEMBER_RULES,
+}

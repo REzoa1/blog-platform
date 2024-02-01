@@ -1,0 +1,89 @@
+@import './../../../scss/variables.scss';
+
+.burger {
+  display: none;
+
+  @media (max-width: $screen-md) {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
+.dropdown {
+  width: 240px;
+
+  ul {
+    padding: 8px !important;
+  }
+}
+
+.menu {
+  @media (max-width: $screen-md) {
+    display: none;
+  }
+}
+
+.btn {
+  border-color: $success-color;
+  color: $success-color;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: $success-color;
+    border-color: $success-color !important;
+    color: $background-color-base !important;
+  }
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.username {
+  color: $heading-color;
+  font-size: 18px;
+}
+
+.skeleton {
+  width: 60px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: inline;
+}
+
+.hidden {
+  display: none;
+}
+
+.burgerMenuItem {
+  padding: 7px 12px !important;
+  margin-bottom: 5px !important;
+
+  &:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+.success {
+  color: $success-color !important;
+
+  &:hover {
+    background-color: #53c41a21 !important;
+    color: $success-color !important;
+  }
+}

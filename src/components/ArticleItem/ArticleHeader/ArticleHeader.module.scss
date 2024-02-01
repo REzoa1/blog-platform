@@ -1,0 +1,48 @@
+@import './../../../scss/variables.scss';
+
+.inline {
+  display: inline;
+}
+
+.title {
+  color: #1677ff;
+  width: auto;
+  max-width: 620px;
+  font-weight: normal;
+  font-size: 24px;
+  margin: 0 !important;
+
+  &:hover {
+    color: #69b1ff;
+  }
+
+  &:active {
+    color: #0958d9;
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.secondary {
+  color: $text-color-secondary;
+}
+
+.likeBtn {
+  margin-left: 8px;
+  padding: 4px 7px;
+  color: $text-color;
+
+  & > span {
+    padding-right: 4px;
+  }
+}
+
+.hoverColor {
+  &:hover {
+    color: $text-color-secondary !important;
+  }
+}

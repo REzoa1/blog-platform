@@ -1,16 +1,12 @@
 import React from 'react'
 import { Form } from 'antd'
 
-import FormWrapper from '../../components/FormWrapper/FormWrapper'
+import DynamicForm from '../../components/DynamicForm/DynamicForm'
 
 function SignUp() {
   const [form] = Form.useForm()
 
-  return (
-    <div className="wrapper">
-      <FormWrapper name="register" form={form} />
-    </div>
-  )
+  return <DynamicForm name="register" form={form} />
 }
 
 export default SignUp

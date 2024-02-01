@@ -39,25 +39,3 @@
     color: $background-color-base !important;
   }
 }
-
-.username {
-  color: $heading-color;
-  font-size: 18px;
-}
-
-.avatar {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}

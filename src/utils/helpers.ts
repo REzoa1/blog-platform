@@ -1,7 +1,7 @@
 import { SyntheticEvent } from 'react'
-import { FormInstance } from 'antd'
+import { NotificationInstance } from 'antd/es/notification/interface'
 
-import { PayloadAction } from '../types'
+import { FieldType, FieldsType, MenuItemType, PayloadAction, UserBodyType } from '../types'
 
 import { DEFAULT_IMAGE } from './constatnts'
 
@@ -16,41 +16,30 @@ const getString = (errs: Array<string>) => {
   return `${capitalize(key)} ${val}`
 }
 
-const validateData = (
-  data: PayloadAction,
-  setErrors: (arg: Array<string>) => void,
-  form: FormInstance,
-  history: { push: (arg: string) => void } | null = null
-) => {
-  const status = data.meta.requestStatus
-  const errs = data.payload
+const getErrors = (errors: PayloadAction, fields: string[]) => {
+  const entries = Object.entries(errors)
 
-  if (status === 'rejected') {
-    const entries = Object.entries(errs)
+  const fieldsErrors: { name: string; errors: string[] }[] = []
+  const unknownErrors: string[] = []
 
-    const values = entries.map((el) => {
-      const [key, val] = el as string[]
-      const fields = Object.keys(form.getFieldsValue())
-      const isFieldHasKey = fields.includes(key)
+  entries.forEach((el) => {
+    const [key, val] = el as string[]
+    const isFieldHasKey = fields.includes(key)
+    const value = getString([key, val])
 
-      if (isFieldHasKey) {
-        return { name: key, errors: [getString([key, val])] }
-      }
+    if (isFieldHasKey) {
+      fieldsErrors.push({ name: key, errors: [value] })
+    } else {
+      unknownErrors.push(value)
+    }
+  })
 
-      setErrors([getString([key, val])])
-      return []
-    })
-
-    form.setFields(values.flat())
-  }
-
-  if (history && status === 'fulfilled') {
-    history?.push('/')
-  }
+  return { fieldsErrors, unknownErrors }
 }
 
 const removeUndefined = (data: { [key: string]: string }) => {
-  return Object.keys(data).reduce((acc, key) => (data[key] ? { ...acc, [key]: data[key] } : { ...acc }), {})
+  const keys = Object.keys(data)
+  return keys.reduce((acc, key) => (data[key] ? { ...acc, [key]: data[key] } : { ...acc }), {}) as UserBodyType
 }
 
 const onImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
@@ -58,4 +47,59 @@ const onImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
   e.currentTarget.src = DEFAULT_IMAGE
 }
 
-export { cn, validateData, removeUndefined, onImageError }
+const openSuccessModal = (api: NotificationInstance) => {
+  api.open({
+    placement: 'top',
+    duration: 2,
+    type: 'success',
+    message: 'Succes',
+    description: 'The changes have been accepted',
+    closeIcon: false,
+  })
+}
+
+type ReturnedValue = { key: string; name?: string; className?: string; required?: boolean }
+const getFieldProps = (item: FieldType, req: boolean = true): ReturnedValue => {
+  if (typeof item === 'object') {
+    const { itemName, required } = item
+    return getFieldProps(itemName, required)
+  }
+
+  return item === 'divider' ? { key: item, className: 'divider' } : { key: item, name: item, required: req }
+}
+
+type ValuesType = { [key: string]: FieldsType }
+const hasValuesChanged = (initialValues: ValuesType, currentValues: ValuesType) => {
+  const keys = Object.keys(initialValues)
+
+  const changedFields = keys.filter((key) => {
+    const val1 = initialValues[key]
+    const val2 = currentValues[key] as string[]
+    if (Array.isArray(val1)) {
+      const array2 = val2?.filter(Boolean)
+      const hasKeys = !val1.some((str) => array2?.some((val) => val === str))
+      return val1?.length !== array2?.length || hasKeys
+    }
+    return val1 !== val2
+  })
+
+  return !changedFields.length
+}
+
+function getItem(
+  label: React.ReactNode,
+  key?: React.Key | null,
+  icon?: React.ReactNode,
+  className?: string | null,
+  onClick?: () => void
+): MenuItemType {
+  return {
+    label,
+    key,
+    icon,
+    className,
+    onClick,
+  } as MenuItemType
+}
+
+export { cn, getErrors, removeUndefined, onImageError, openSuccessModal, getFieldProps, hasValuesChanged, getItem }

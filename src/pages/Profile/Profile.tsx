@@ -1,23 +1,29 @@
-import React, { useEffect } from 'react'
-import { Form } from 'antd'
+import React from 'react'
+import { Form, Spin } from 'antd'
 
-import FormWrapper from '../../components/FormWrapper/FormWrapper'
 import { useAppSelector } from '../../store'
 import { selectAuth } from '../../store/slices/auth'
+import { FieldsType } from '../../types'
+import DynamicForm from '../../components/DynamicForm/DynamicForm'
+import { hasValuesChanged } from '../../utils/helpers'
+
+const { useForm, useWatch } = Form
 
 function Profile() {
   const { userdata } = useAppSelector(selectAuth)
+  const [form] = useForm()
+  useWatch((values: FieldsType) => values, form)
 
-  const [form] = Form.useForm()
+  if (!userdata) {
+    return <Spin className="spin" />
+  }
 
-  useEffect(() => {
-    if (userdata) {
-      const { username, email, image } = userdata
-      form.setFieldsValue({ username, email, image })
-    }
-  }, [userdata, form])
+  const { username, email, image } = userdata
+  const initialValues = { username, email, image, 'new-password': '' } as { [key: string]: FieldsType }
 
-  return <div className="wrapper">{userdata && <FormWrapper name="profile" form={form} />}</div>
+  const disabled = hasValuesChanged(initialValues, form.getFieldsValue())
+
+  return <DynamicForm name="profile" form={form} initialValues={initialValues} disabled={disabled} />
 }
 
 export default Profile
