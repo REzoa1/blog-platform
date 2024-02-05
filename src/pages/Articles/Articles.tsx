@@ -27,7 +27,6 @@ function Articles() {
       </Flex>
 
       <Pagination
-        showQuickJumper
         className={s.pagination}
         onChange={handleChange}
         showSizeChanger={false}
