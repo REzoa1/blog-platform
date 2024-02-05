@@ -13,7 +13,7 @@ import s from './UserHeader.module.scss'
 function UserHeader() {
   const dispatch = useAppDispatch()
   const history = useHistory()
-  const { userdata } = useAppSelector(selectAuth)
+  const { userdata, status } = useAppSelector(selectAuth)
   const [isImageLoading, setIsImageLoading] = useState(true)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -36,6 +36,7 @@ function UserHeader() {
 
   const avatarCN = cn(s.avatar, isImageLoading && s.hidden)
   const skeletonCN = cn(s.avatar, !isImageLoading && s.hidden)
+  const isActive = isImageLoading && status !== 'success'
 
   return (
     <>
@@ -56,11 +57,8 @@ function UserHeader() {
             {userdata?.username ? userdata.username : <Skeleton className={s.skeleton} paragraph={false} />}
           </span>
 
-          {!userdata?.image ? (
-            <Skeleton className={skeletonCN} active={isImageLoading} avatar title={false} paragraph={false} />
-          ) : (
-            <img className={avatarCN} src={userdata.image} alt="Avatar" onLoad={() => setIsImageLoading(false)} />
-          )}
+          <Skeleton className={skeletonCN} active={isActive} avatar title={false} paragraph={false} />
+          <img className={avatarCN} src={userdata?.image} alt="Avatar" onLoad={() => setIsImageLoading(false)} />
         </Link>
         <Button onClick={handleLogOut}>Log Out</Button>
       </Flex>

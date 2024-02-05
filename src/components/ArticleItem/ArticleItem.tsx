@@ -7,8 +7,8 @@ import { ArticleType } from '../../types'
 import { cn, onImageError } from '../../utils/helpers'
 
 import ArticleHeader from './ArticleHeader/ArticleHeader'
-import s from './ArticleItem.module.scss'
 import ArticleActions from './ArticleActions/ArticleActions'
+import s from './ArticleItem.module.scss'
 
 type PropsType = {
   data: ArticleType
