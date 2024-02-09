@@ -3,7 +3,7 @@ import { Form, Spin } from 'antd'
 
 import { useAppSelector } from '../../store'
 import { selectAuth } from '../../store/slices/auth'
-import { FieldsType } from '../../types'
+import { EditProfileFields } from '../../types'
 import DynamicForm from '../../components/DynamicForm/DynamicForm'
 import { hasValuesChanged } from '../../utils/helpers'
 
@@ -12,14 +12,14 @@ const { useForm, useWatch } = Form
 function Profile() {
   const { userdata } = useAppSelector(selectAuth)
   const [form] = useForm()
-  useWatch((values: FieldsType) => values, form)
+  useWatch((values: EditProfileFields) => values, form)
 
   if (!userdata) {
     return <Spin className="spin" />
   }
 
   const { username, email, image } = userdata
-  const initialValues = { username, email, image, 'new-password': '' } as { [key: string]: FieldsType }
+  const initialValues = { username, email, image, 'new-password': '' }
 
   const disabled = hasValuesChanged(initialValues, form.getFieldsValue())
 

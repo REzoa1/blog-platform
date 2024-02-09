@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { API_BASE } from '../../utils/constatnts'
-import { AuthState, DataBodyType, StatesType } from '../../types'
+import { AuthState, DataType, StatesType } from '../../types'
 import { getData, postData, putData } from '../../utils/fetchUtils'
 
 const initialState: AuthState = {
@@ -11,20 +11,17 @@ const initialState: AuthState = {
   status: 'idle',
 }
 
-export const registerUser = createAsyncThunk(
-  'auth/registerUser',
-  async (userData: DataBodyType, { rejectWithValue }) => {
-    const url = `${API_BASE}/users`
-    return postData(url, userData, rejectWithValue, false)
-  }
-)
+export const registerUser = createAsyncThunk('auth/registerUser', async (userData: DataType, { rejectWithValue }) => {
+  const url = `${API_BASE}/users`
+  return postData(url, userData, rejectWithValue, false)
+})
 
-export const loginUser = createAsyncThunk('auth/loginUser', async (userData: DataBodyType, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk('auth/loginUser', async (userData: DataType, { rejectWithValue }) => {
   const url = `${API_BASE}/users/login`
   return postData(url, userData, rejectWithValue, false)
 })
 
-export const updateUser = createAsyncThunk('auth/updateUser', async (userData: DataBodyType, { rejectWithValue }) => {
+export const updateUser = createAsyncThunk('auth/updateUser', async (userData: DataType, { rejectWithValue }) => {
   const url = `${API_BASE}/user`
   return putData(url, userData, rejectWithValue)
 })

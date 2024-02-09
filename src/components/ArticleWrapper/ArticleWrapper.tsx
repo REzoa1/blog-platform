@@ -6,10 +6,8 @@ import { selectArticles } from '../../store/slices/articles'
 import { StatusType } from '../../types'
 import ErrorView from '../ErrorView/ErrorView'
 
-type ComponentForType = { [Status in StatusType]: JSX.Element }
-
 type PropsType = {
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element
 }
 
 function ArticleWrapper({ children }: PropsType) {
@@ -19,7 +17,7 @@ function ArticleWrapper({ children }: PropsType) {
   const failed = <ErrorView code={errCode} />
   const success = children
 
-  const componentFor = { idle: loading, loading, failed, success } as ComponentForType
+  const componentFor = { idle: loading, loading, failed, success } as Record<StatusType, JSX.Element>
 
   return componentFor[status]
 }

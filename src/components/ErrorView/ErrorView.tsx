@@ -3,8 +3,6 @@ import { Button, Result } from 'antd'
 import { ResultStatusType } from 'antd/es/result'
 import { useHistory } from 'react-router-dom'
 
-type SubTitleForType = { [Transfers in ResultStatusType]: string }
-
 type PropsType = {
   code: number | null
 }
@@ -17,7 +15,7 @@ function ErrorView({ code }: PropsType) {
     403: 'Sorry, you are not authorized to access this page.',
     404: 'Sorry, the page you visited does not exist.',
     500: 'Sorry, something went wrong.',
-  } as SubTitleForType
+  } as Record<ResultStatusType, string>
 
   const status = code && availableCodes.includes(code) ? (code as ResultStatusType) : 500
   const onClick = () => {

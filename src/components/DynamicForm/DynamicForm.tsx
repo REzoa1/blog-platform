@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { Button, Divider, Form, FormInstance, notification } from 'antd'
 import { Link, useHistory, useParams } from 'react-router-dom'
 
-import { FieldType, FieldsType, FormValuesType, PayloadAction } from '../../types'
+import { FieldType, FieldsType, FormPayloadType, FormValuesType } from '../../types'
 import { useAppDispatch } from '../../store'
 import { cn, getErrors, getFieldProps, openSuccessModal } from '../../utils/helpers'
 import valuesFor from '../../utils/formData'
@@ -24,14 +24,15 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
   const history = useHistory()
   const { slug } = useParams<{ slug: string }>()
   const [api, contextHolder] = useNotification({ maxCount: 1 })
-  const [errors, setErrors] = useState([] as string[])
+  const [errors, setErrors] = useState<string[]>([])
 
   const { title, fields, submitText, subtitle, getData } = valuesFor[name] as FormValuesType
 
   const body = fields.map((field: FieldType) => {
     const initialProps = getFieldProps(field)
-    const type = field === 'divider' ? Divider : FormItem
     const props = initialProps.className ? { ...initialProps, className: s[initialProps.className] } : initialProps
+
+    const type = field === 'divider' ? Divider : FormItem
 
     return React.createElement(type as FC, props)
   })
@@ -41,17 +42,15 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
     const { data, action, shouldValidate, shouldNotify, pushInHistory, withSlug } = getData(values)
     const finalData = withSlug ? { slug, data } : data
 
-    dispatch(action(finalData)).then((newData: PayloadAction) => {
-      const status = newData.meta.requestStatus
+    dispatch(action(finalData)).then(({ payload, meta }: FormPayloadType) => {
+      const status = meta.requestStatus
 
       if (shouldValidate && status === 'rejected') {
-        const errs = newData.payload
-        const { fieldsErrors, unknownErrors } = getErrors(errs, fields)
+        const { fieldsErrors, unknownErrors } = getErrors(payload as Record<string, string>, fields)
 
         if (fieldsErrors.length) {
           form.setFields(fieldsErrors)
         }
-
         if (unknownErrors.length) {
           setErrors(unknownErrors)
         }

@@ -7,7 +7,7 @@ import { selectAuth } from '../../store/slices/auth'
 import ArticleWrapper from '../../components/ArticleWrapper/ArticleWrapper'
 import DynamicForm from '../../components/DynamicForm/DynamicForm'
 import { getArticle, selectArticles } from '../../store/slices/articles'
-import { FieldsType } from '../../types'
+import { ArticleFields } from '../../types'
 import { hasValuesChanged } from '../../utils/helpers'
 
 const { useForm, useWatch } = Form
@@ -18,7 +18,7 @@ function EditArticle() {
   const { article } = useAppSelector(selectArticles)
   const { userdata } = useAppSelector(selectAuth)
   const [form] = useForm()
-  useWatch((values: FieldsType) => values, form)
+  useWatch((values: ArticleFields) => values, form)
 
   useEffect(() => {
     if (!article) {
@@ -31,7 +31,7 @@ function EditArticle() {
   }
 
   const { title, description, body: text, tagList, author } = article
-  const initialValues = { title, description, text, tagList } as { [key: string]: FieldsType }
+  const initialValues = { title, description, text, tagList }
   const disabled = hasValuesChanged(initialValues, form.getFieldsValue())
 
   const isAuthor = userdata.username === author.username

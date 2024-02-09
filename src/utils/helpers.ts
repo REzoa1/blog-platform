@@ -1,9 +1,6 @@
-import { SyntheticEvent } from 'react'
 import { NotificationInstance } from 'antd/es/notification/interface'
 
-import { FieldType, FieldsType, MenuItemType, PayloadAction, UserBodyType } from '../types'
-
-import { DEFAULT_IMAGE } from './constatnts'
+import { FieldType, MenuItemType } from '../types'
 
 const cn = (...classes: Array<boolean | string>) => [...classes].filter(Boolean).join(' ')
 
@@ -16,7 +13,7 @@ const getString = (errs: Array<string>) => {
   return `${capitalize(key)} ${val}`
 }
 
-const getErrors = (errors: PayloadAction, fields: string[]) => {
+const getErrors = (errors: Record<string, string>, fields: string[]) => {
   const entries = Object.entries(errors)
 
   const fieldsErrors: { name: string; errors: string[] }[] = []
@@ -37,14 +34,9 @@ const getErrors = (errors: PayloadAction, fields: string[]) => {
   return { fieldsErrors, unknownErrors }
 }
 
-const removeUndefined = (data: { [key: string]: string }) => {
+const removeUndefined = (data: Record<string, string | undefined>) => {
   const keys = Object.keys(data)
-  return keys.reduce((acc, key) => (data[key] ? { ...acc, [key]: data[key] } : { ...acc }), {}) as UserBodyType
-}
-
-const onImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
-  // eslint-disable-next-line no-param-reassign
-  e.currentTarget.src = DEFAULT_IMAGE
+  return keys.reduce((acc, key) => (data[key] ? { ...acc, [key]: data[key] } : { ...acc }), {})
 }
 
 const openSuccessModal = (api: NotificationInstance) => {
@@ -58,8 +50,10 @@ const openSuccessModal = (api: NotificationInstance) => {
   })
 }
 
-type ReturnedValue = { key: string; name?: string; className?: string; required?: boolean }
-const getFieldProps = (item: FieldType, req: boolean = true): ReturnedValue => {
+const getFieldProps = (
+  item: FieldType,
+  req: boolean = true
+): { key: string; name?: string; className?: string; required?: boolean } => {
   if (typeof item === 'object') {
     const { itemName, required } = item
     return getFieldProps(itemName, required)
@@ -68,22 +62,24 @@ const getFieldProps = (item: FieldType, req: boolean = true): ReturnedValue => {
   return item === 'divider' ? { key: item, className: 'divider' } : { key: item, name: item, required: req }
 }
 
-type ValuesType = { [key: string]: FieldsType }
-const hasValuesChanged = (initialValues: ValuesType, currentValues: ValuesType) => {
+const trimAndFilterArr = (array: Array<string> | undefined) => {
+  return array?.map((val) => val?.trim()).filter(Boolean)
+}
+
+const hasValuesChanged = <T>(initialValues: Record<string, T>, currentValues: Record<string, T>) => {
   const keys = Object.keys(initialValues)
 
-  const changedFields = keys.filter((key) => {
-    const val1 = initialValues[key]
-    const val2 = currentValues[key] as string[]
-    if (Array.isArray(val1)) {
-      const array2 = val2?.filter(Boolean)
-      const hasKeys = !val1.some((str) => array2?.some((val) => val === str))
-      return val1?.length !== array2?.length || hasKeys
-    }
-    return val1 !== val2
-  })
+  return !keys.some((key) => {
+    const initialVal = initialValues[key]
+    const currentVal = currentValues[key]
 
-  return !changedFields.length
+    if (Array.isArray(initialVal)) {
+      const current = trimAndFilterArr(currentVal as string[])
+      const isArrChanged = initialVal.toString() !== current?.toString()
+      return initialVal?.length !== current?.length || isArrChanged
+    }
+    return initialVal !== currentVal
+  })
 }
 
 function getItem(
@@ -102,4 +98,4 @@ function getItem(
   } as MenuItemType
 }
 
-export { cn, getErrors, removeUndefined, onImageError, openSuccessModal, getFieldProps, hasValuesChanged, getItem }
+export { cn, getErrors, removeUndefined, trimAndFilterArr, openSuccessModal, getFieldProps, hasValuesChanged, getItem }

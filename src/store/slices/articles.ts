@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { API_BASE, PAGE_SIZE } from '../../utils/constatnts'
-import { ArticlesState, DataBodyType, StatesType } from '../../types'
+import { ArticlesState, DataType, StatesType } from '../../types'
 import { deleteData, getData, postData, putData } from '../../utils/fetchUtils'
 
 const initialState: ArticlesState = {
@@ -38,7 +38,7 @@ export const getArticle = createAsyncThunk(
 
 export const createArticle = createAsyncThunk(
   'articles/createArticle',
-  async (articleData: DataBodyType, { rejectWithValue }) => {
+  async (articleData: DataType, { rejectWithValue }) => {
     const url = `${API_BASE}/articles`
     return postData(url, articleData, rejectWithValue)
   }
@@ -51,7 +51,7 @@ export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (s
 
 export const updateArticle = createAsyncThunk(
   'articles/updateArticle',
-  async ({ slug, data }: { slug: string; data: DataBodyType }, { rejectWithValue }) => {
+  async ({ slug, data }: { slug: string; data: DataType }, { rejectWithValue }) => {
     const url = `${API_BASE}/articles/${slug}`
     return putData(url, data, rejectWithValue)
   }

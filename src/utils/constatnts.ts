@@ -22,6 +22,10 @@ const THEME_TOKENS = {
     Form: {
       itemMarginBottom: 12,
     },
+    Divider: {
+      orientationMargin: 1,
+      verticalMarginInline: 1,
+    },
   },
 }
 

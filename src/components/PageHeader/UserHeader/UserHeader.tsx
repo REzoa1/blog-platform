@@ -38,11 +38,19 @@ function UserHeader() {
   const skeletonCN = cn(s.avatar, !isImageLoading && s.hidden)
   const isActive = isImageLoading && status !== 'success'
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const onImageLoad = () => {
+    setIsImageLoading(false)
+  }
+
   return (
     <>
       <div className={s.burger}>
         <Dropdown overlayClassName={s.dropdown} menu={{ items }} trigger={['click']}>
-          <Button type="text" onClick={() => setIsMenuOpen(!isMenuOpen)} icon={<MenuOutlined />} />
+          <Button type="text" onClick={toggleMenu} icon={<MenuOutlined />} />
         </Dropdown>
       </div>
 
@@ -58,7 +66,7 @@ function UserHeader() {
           </span>
 
           <Skeleton className={skeletonCN} active={isActive} avatar title={false} paragraph={false} />
-          <img className={avatarCN} src={userdata?.image} alt="Avatar" onLoad={() => setIsImageLoading(false)} />
+          <img className={avatarCN} src={userdata?.image} alt="Avatar" onLoad={onImageLoad} />
         </Link>
         <Button onClick={handleLogOut}>Log Out</Button>
       </Flex>

@@ -11,6 +11,8 @@
 
   box-shadow: $box-shadow;
 
+  border-radius: 6px;
+
   @media (max-width: $screen-md) {
     width: auto;
     padding: 32px 21px;
@@ -63,7 +65,7 @@
 }
 
 .divider {
-  margin: 0 0 8px;
+  margin: 9px 0;
 }
 
 .footer {

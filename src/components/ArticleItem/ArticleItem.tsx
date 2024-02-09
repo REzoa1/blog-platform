@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import { Card, Flex, Tag, Space } from 'antd'
 import Markdown from 'react-markdown'
 import { format } from 'date-fns'
 
 import { ArticleType } from '../../types'
-import { cn, onImageError } from '../../utils/helpers'
+import { cn } from '../../utils/helpers'
+import { DEFAULT_IMAGE } from '../../utils/constatnts'
 
 import ArticleHeader from './ArticleHeader/ArticleHeader'
 import ArticleActions from './ArticleActions/ArticleActions'
@@ -43,6 +44,11 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
   )
 
   const descCN = cn(isArticlePage && s.secondary)
+
+  const onImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    // eslint-disable-next-line no-param-reassign
+    e.currentTarget.src = DEFAULT_IMAGE
+  }
 
   return (
     <Card className={s.card} bordered={false}>

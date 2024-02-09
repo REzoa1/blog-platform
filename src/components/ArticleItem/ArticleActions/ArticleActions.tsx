@@ -26,6 +26,7 @@ function ArticleActions({ data, isArticlePage }: PropsType) {
   const onDeleteArticle = () => {
     dispatch(deleteArticle(slug)).then(() => history.push('/articles/'))
   }
+
   const btnCN = cn(s.btn, s.successBtn)
 
   return (

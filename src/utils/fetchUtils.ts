@@ -1,6 +1,6 @@
 import { ActionCreator } from '@reduxjs/toolkit'
 
-import { DataBodyType, MethodType } from '../types'
+import { DataType, MethodType } from '../types'
 
 const fetchData = async (url: string, options: RequestInit, reject: ActionCreator<void>) => {
   try {
@@ -20,7 +20,7 @@ const fetchData = async (url: string, options: RequestInit, reject: ActionCreato
   }
 }
 
-const getOptions = (method: MethodType, dataBody: DataBodyType | null = null, withAuth = true) => {
+const getOptions = (method: MethodType, dataBody: DataType | null = null, withAuth = true) => {
   const initialHeaders = {
     'Content-Type': 'application/json',
   }
@@ -47,12 +47,12 @@ const getData = async (url: string, withAuth: boolean, reject: ActionCreator<voi
   return fetchData(url, options, reject)
 }
 
-const postData = (url: string, body: DataBodyType | null, reject: ActionCreator<void>, withAuth = true) => {
+const postData = (url: string, body: DataType | null, reject: ActionCreator<void>, withAuth = true) => {
   const options = getOptions('POST', body, withAuth)
   return fetchData(url, options, reject)
 }
 
-const putData = (url: string, body: DataBodyType, reject: ActionCreator<void>) => {
+const putData = (url: string, body: DataType, reject: ActionCreator<void>) => {
   const options = getOptions('PUT', body)
   return fetchData(url, options, reject)
 }

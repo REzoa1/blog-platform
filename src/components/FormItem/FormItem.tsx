@@ -1,11 +1,11 @@
 import React from 'react'
 import { Form } from 'antd'
 
-import { FormItemValuesType, ItemNameType } from '../../types'
+import { FormItemValuesType, FormItemType } from '../../types'
 import valuesFor from '../../utils/formItemData'
 
 type PropsType = {
-  name: ItemNameType
+  name: FormItemType
   required?: boolean
 }
 
