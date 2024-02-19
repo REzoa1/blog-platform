@@ -72,6 +72,8 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
   const formCN = cn(s.form, isArticleForm && s.articleForm)
   const submitCN = cn(s.btn, isArticleForm && s.articleBtn)
 
+  const isLoginPage = name === 'login'
+
   return (
     <Form
       form={form}
@@ -81,6 +83,7 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
       requiredMark={false}
       onFinish={onFinish}
       initialValues={initialValues}
+      validateTrigger={isLoginPage ? [] : ['onChange']}
     >
       {contextHolder}
 
