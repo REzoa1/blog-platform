@@ -9,7 +9,7 @@ type PropsType = {
   required?: boolean
 }
 
-function FormItem({ name, required }: PropsType) {
+function FormItem({ name, required = false }: PropsType) {
   const { label, type, props, children, rules = [] } = valuesFor[name] as FormItemValuesType
 
   const message = name === 'repeat-password' ? 'Please repeat your password!' : `Please input ${name}!`
@@ -22,10 +22,6 @@ function FormItem({ name, required }: PropsType) {
       {React.createElement(type, props, children)}
     </Form.Item>
   )
-}
-
-FormItem.defaultProps = {
-  required: false,
 }
 
 export default FormItem

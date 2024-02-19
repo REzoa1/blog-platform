@@ -13,13 +13,13 @@ import styles from './DynamicForm.module.scss'
 type PropsType = {
   name: 'login' | 'register' | 'profile' | 'create-article' | 'edit-article'
   form: FormInstance
-  initialValues?: FieldsType
+  initialValues?: FieldsType | object
   disabled?: boolean
 }
 
 const { useNotification } = notification
 
-function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
+function DynamicForm({ name, form, initialValues = {}, disabled = false }: PropsType) {
   const dispatch = useAppDispatch()
   const history = useHistory()
   const { slug } = useParams<{ slug: string }>()
@@ -106,11 +106,6 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
       </div>
     </Form>
   )
-}
-
-DynamicForm.defaultProps = {
-  initialValues: {},
-  disabled: false,
 }
 
 export default DynamicForm

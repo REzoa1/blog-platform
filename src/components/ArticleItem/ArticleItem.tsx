@@ -78,8 +78,4 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
   )
 }
 
-ArticleItem.defaultProps = {
-  isArticlePage: false,
-}
-
 export default ArticleItem

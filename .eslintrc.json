@@ -47,6 +47,7 @@
     "react/prop-types": 0,
     "import/no-unresolved": [2, { "caseSensitive": false }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/require-default-props": 0,
     "import/order": [
       2,
       {
