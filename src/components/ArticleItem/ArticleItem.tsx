@@ -9,7 +9,7 @@ import { DEFAULT_IMAGE } from '../../utils/constatnts'
 
 import ArticleHeader from './ArticleHeader/ArticleHeader'
 import ArticleActions from './ArticleActions/ArticleActions'
-import s from './ArticleItem.module.scss'
+import styles from './ArticleItem.module.scss'
 
 type PropsType = {
   data: ArticleType
@@ -43,7 +43,7 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
     </Space>
   )
 
-  const descCN = cn(isArticlePage && s.secondary)
+  const descCN = cn(isArticlePage && styles.secondary)
 
   const onImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     // eslint-disable-next-line no-param-reassign
@@ -51,29 +51,29 @@ function ArticleItem({ data, isArticlePage = false }: PropsType) {
   }
 
   return (
-    <Card className={s.card} bordered={false}>
-      <Flex className={s.article}>
-        <Flex className={s.left} vertical gap="small">
+    <Card className={styles.card} bordered={false}>
+      <Flex className={styles.article}>
+        <Flex className={styles.left} vertical gap="small">
           <ArticleHeader data={data} isArticlePage={isArticlePage} />
           {finalTagList.length !== 0 && tags}
 
           {description?.length !== 0 && <div className={descCN}>{croppedDesc}</div>}
         </Flex>
         <Flex vertical align="start" gap="small">
-          <Space className={s.right}>
+          <Space className={styles.right}>
             <div>
-              <h3 className={s.heading}>{author.username}</h3>
-              <span className={s.secondary}>{date}</span>
+              <h3 className={styles.heading}>{author.username}</h3>
+              <span className={styles.secondary}>{date}</span>
             </div>
 
-            <img className={s.avatar} alt="avatar" src={author.image} onError={onImageError} />
+            <img className={styles.avatar} alt="avatar" src={author.image} onError={onImageError} />
           </Space>
 
           <ArticleActions data={data} isArticlePage={isArticlePage} />
         </Flex>
       </Flex>
 
-      {isArticlePage && body && <Markdown className={s.body}>{body}</Markdown>}
+      {isArticlePage && body && <Markdown className={styles.body}>{body}</Markdown>}
     </Card>
   )
 }

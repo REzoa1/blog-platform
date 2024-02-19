@@ -8,7 +8,7 @@ import ArticleWrapper from '../../components/ArticleWrapper/ArticleWrapper'
 import ArticleItem from '../../components/ArticleItem/ArticleItem'
 import { PAGE_SIZE } from '../../utils/constatnts'
 
-import s from './Articles.module.scss'
+import styles from './Articles.module.scss'
 
 function Articles() {
   const dispatch = useAppDispatch()
@@ -27,7 +27,7 @@ function Articles() {
       </Flex>
 
       <Pagination
-        className={s.pagination}
+        className={styles.pagination}
         onChange={handleChange}
         showSizeChanger={false}
         pageSize={PAGE_SIZE}

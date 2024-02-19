@@ -8,7 +8,7 @@ import { selectAuth } from '../../../store/slices/auth'
 import { cn } from '../../../utils/helpers'
 import { ArticleType } from '../../../types'
 
-import s from './ArticleActions.module.scss'
+import styles from './ArticleActions.module.scss'
 
 type PropsType = {
   data: ArticleType
@@ -27,7 +27,7 @@ function ArticleActions({ data, isArticlePage }: PropsType) {
     dispatch(deleteArticle(slug)).then(() => history.push('/articles/'))
   }
 
-  const btnCN = cn(s.btn, s.successBtn)
+  const btnCN = cn(styles.btn, styles.successBtn)
 
   return (
     <Space>
@@ -40,7 +40,7 @@ function ArticleActions({ data, isArticlePage }: PropsType) {
             okText="Yes"
             cancelText="No"
           >
-            <Button className={s.btn} danger>
+            <Button className={styles.btn} danger>
               Delete
             </Button>
           </Popconfirm>

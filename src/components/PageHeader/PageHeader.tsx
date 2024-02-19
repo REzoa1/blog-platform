@@ -6,7 +6,7 @@ import { useAppSelector } from '../../store'
 import { selectAuth } from '../../store/slices/auth'
 
 import UserHeader from './UserHeader/UserHeader'
-import s from './PageHeader.module.scss'
+import styles from './PageHeader.module.scss'
 
 const { Header } = Layout
 
@@ -14,8 +14,8 @@ function PageHeader() {
   const { isLoggedIn } = useAppSelector(selectAuth)
 
   return (
-    <Header className={s.header}>
-      <Link to="/articles/" className={s.link}>
+    <Header className={styles.header}>
+      <Link to="/articles/" className={styles.link}>
         Realworld Blog
       </Link>
 
@@ -27,7 +27,7 @@ function PageHeader() {
             <Button type="text">Sign In</Button>
           </Link>
           <Link to="/sign-up">
-            <Button className={s.btn}>Sign Up</Button>
+            <Button className={styles.btn}>Sign Up</Button>
           </Link>
         </Space>
       )}

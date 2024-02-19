@@ -9,7 +9,7 @@ import { favoriteArticle, unfavoriteArticle } from '../../../store/slices/articl
 import { useAppDispatch, useAppSelector } from '../../../store'
 import { selectAuth } from '../../../store/slices/auth'
 
-import s from './ArticleHeader.module.scss'
+import styles from './ArticleHeader.module.scss'
 
 type PropsType = {
   data: ArticleType
@@ -33,9 +33,9 @@ function ArticleHeader({ data, isArticlePage }: PropsType) {
     setFavCount((prev) => (isFavorite ? prev - 1 : prev + 1))
   }
 
-  const containerCN = cn(isArticlePage && s.inline)
-  const titleCN = cn(s.title, !isArticlePage && s.ellipsis, isTitleEmpty && s.secondary)
-  const btnCN = cn(s.likeBtn, !isFavorite && isLoggedIn && s.hoverColor)
+  const containerCN = cn(isArticlePage && styles.inline)
+  const titleCN = cn(styles.title, !isArticlePage && styles.ellipsis, isTitleEmpty && styles.secondary)
+  const btnCN = cn(styles.likeBtn, !isFavorite && isLoggedIn && styles.hoverColor)
 
   const btnIcon = isFavorite ? <HeartFilled /> : <HeartOutlined />
 

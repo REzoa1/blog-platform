@@ -8,7 +8,7 @@ import { cn, getErrors, getFieldProps, openSuccessModal } from '../../utils/help
 import valuesFor from '../../utils/formData'
 import FormItem from '../FormItem/FormItem'
 
-import s from './DynamicForm.module.scss'
+import styles from './DynamicForm.module.scss'
 
 type PropsType = {
   name: 'login' | 'register' | 'profile' | 'create-article' | 'edit-article'
@@ -30,7 +30,7 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
 
   const body = fields.map((field: FieldType) => {
     const initialProps = getFieldProps(field)
-    const props = initialProps.className ? { ...initialProps, className: s[initialProps.className] } : initialProps
+    const props = initialProps.className ? { ...initialProps, className: styles[initialProps.className] } : initialProps
 
     const type = field === 'divider' ? Divider : FormItem
 
@@ -69,8 +69,8 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
   }
 
   const isArticleForm = name.includes('article')
-  const formCN = cn(s.form, isArticleForm && s.articleForm)
-  const submitCN = cn(s.btn, isArticleForm && s.articleBtn)
+  const formCN = cn(styles.form, isArticleForm && styles.articleForm)
+  const submitCN = cn(styles.btn, isArticleForm && styles.articleBtn)
 
   const isLoginPage = name === 'login'
 
@@ -87,12 +87,12 @@ function DynamicForm({ name, form, initialValues, disabled }: PropsType) {
     >
       {contextHolder}
 
-      <h2 className={s.title}>{title}</h2>
+      <h2 className={styles.title}>{title}</h2>
       {body}
 
-      {errors.length !== 0 && <Form.ErrorList className={s.errors} errors={errors} />}
+      {errors.length !== 0 && <Form.ErrorList className={styles.errors} errors={errors} />}
 
-      <div className={s.footer}>
+      <div className={styles.footer}>
         <Button className={submitCN} type="primary" htmlType="submit" disabled={disabled}>
           {submitText}
         </Button>
